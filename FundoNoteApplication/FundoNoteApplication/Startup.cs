@@ -1,4 +1,8 @@
+using BusinessLayer.Interface;
+using BusinessLayer.Services;
 using DataLayer.DB;
+using DataLayer.Interface;
+using DataLayer.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,7 +32,10 @@ namespace FundoNoteApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<FundoContext>(opts => opts.UseSqlServer(Configuration["ConnectionString:FundoDB"]));//initial catalog fundodb
+            //register ou fundocontext 
             services.AddControllers();
+            services.AddTransient<IUserBL, UserBL>();
+            services.AddTransient<IUserDL, UserDL>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
